@@ -46,4 +46,24 @@ if __name__ == '__main__':
     # y verifique si los primeros usuarios (mirando la página a ojo)
     # los datos recolectados son correctos.
 
+    response = requests.get("https://jsonplaceholder.typicode.com/todos")
+    data = response.json()
+           
+    usuarios = [0 for x in list(range(10))]
+    for usuario in data:
+        if usuario["completed"]:
+            id = usuario["userId"]-1
+            usuarios[id] += 1
+
+    print (usuarios)            
+
+    ids = [x+1 for x in list(range(10))]
+    fig = plt.figure()
+    fig.suptitle('Titulos completados', fontsize=16,)
+    ax = fig.add_subplot()
+    ax.bar(ids, usuarios)
+    ax.legend("id")
+    ax.grid()
+    plt.show()
+    
     print("terminamos")
