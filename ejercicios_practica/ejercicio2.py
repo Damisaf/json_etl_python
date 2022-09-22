@@ -55,15 +55,34 @@ if __name__ == '__main__':
             id = usuario["userId"]-1
             usuarios[id] += 1
 
-    print (usuarios)            
-
+    lista = [x.get("userId") for x in data if x.get("completed")]
+    lista_suma = [lista.count(x) for x in lista]
+    '''
+    lista_id=[]
+    for x in lista:
+        if not(x in lista_id):
+            lista_id.append(x)
+    '''
+      
+    lista_id = [x for x in lista if not (x in lista)]
+    print (lista_id)
+    #print (lista_suma)
+    #print (usuarios)            
+    #print (lista)
+    #print (lista_id)
+    '''
     ids = [x+1 for x in list(range(10))]
     fig = plt.figure()
     fig.suptitle('Titulos completados', fontsize=16,)
     ax = fig.add_subplot()
     ax.bar(ids, usuarios)
-    ax.legend("id")
-    ax.grid()
+    ax.set_ylabel("cursos")
+    ax.set_xlabel("Id alumno")
+    ax.set_ylim([0, 20])
+
+    ax.grid(linewidth=1)
     plt.show()
     
+    '''
+
     print("terminamos")
