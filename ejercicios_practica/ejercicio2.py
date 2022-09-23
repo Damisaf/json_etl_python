@@ -48,41 +48,42 @@ if __name__ == '__main__':
 
     response = requests.get("https://jsonplaceholder.typicode.com/todos")
     data = response.json()
-           
-    usuarios = [0 for x in list(range(10))]
+    
+    # forma 1 
+    cantidad = [0 for x in list(range(10))]
     for usuario in data:
         if usuario["completed"]:
             id = usuario["userId"]-1
-            usuarios[id] += 1
+            cantidad[id] += 1
+    lista_id = [x+1 for x in list(range(10))]
 
-    lista = [x.get("userId") for x in data if x.get("completed")]
-    lista_suma = [lista.count(x) for x in lista]
-    '''
-    lista_id=[]
-    for x in lista:
-        if not(x in lista_id):
-            lista_id.append(x)
-    '''
-      
-    lista_id = [x for x in lista if not (x in lista)]
-    print (lista_id)
-    #print (lista_suma)
-    #print (usuarios)            
-    #print (lista)
-    #print (lista_id)
-    '''
-    ids = [x+1 for x in list(range(10))]
     fig = plt.figure()
-    fig.suptitle('Titulos completados', fontsize=16,)
+    fig.suptitle('Titulos completados (1)', fontsize=16,)
     ax = fig.add_subplot()
-    ax.bar(ids, usuarios)
+    ax.bar(lista_id, cantidad)
     ax.set_ylabel("cursos")
     ax.set_xlabel("Id alumno")
+    ax.set_facecolor('whitesmoke')
     ax.set_ylim([0, 20])
-
-    ax.grid(linewidth=1)
+    ax.grid()
     plt.show()
     
-    '''
 
+    # forma 2
+    lista = [x.get("userId") for x in data if x.get("completed")]
+    lista_suma = [lista.count(x) for x in lista]  
+    cantidad = [lista_suma[i] for i in range(len(lista)) if (lista[i-1] != lista[i])]
+    lista_id = list(set(lista))    
+
+    fig = plt.figure()
+    fig.suptitle('Titulos completados (2)', fontsize=16,)
+    ax = fig.add_subplot()
+    ax.bar(lista_id, cantidad)
+    ax.set_ylabel("cursos")
+    ax.set_xlabel("Id alumno")
+    ax.set_facecolor('whitesmoke')
+    ax.set_ylim([0, 20])
+    ax.grid()
+    plt.show()
+    
     print("terminamos")
